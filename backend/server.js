@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 
 import productRoutes from './routes/product.routes.js';
-import authRoutes from './routes/product.routes.js';
+import authRoutes from './routes/auth.routes.js';
 
 import { connectDb } from './lib/db.js';
 
