@@ -61,7 +61,7 @@ export const updateQuantity = async(req, res) =>{
         res.status(500).json({message:"server error", error:error.message});
 
     }
-}
+}   
 
 
 export const getCartProducts= async(req, res)=>{
