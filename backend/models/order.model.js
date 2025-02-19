@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Product from "./product.model.js";
 
 const orderSchema = new mongoose.Schema(
   {

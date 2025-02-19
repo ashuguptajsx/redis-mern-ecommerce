@@ -1,6 +1,6 @@
 import Coupon from "../models/coupon.model.js";
 
-export const getCoupon = async (req, res) => {
+export const getCoupons = async (req, res) => {
   try {
     const coupon = await Coupon.findOne({
       userId: req.user._id,
@@ -13,7 +13,7 @@ export const getCoupon = async (req, res) => {
   }
 };
 
-export const createCoupon = async (req, res) => {
+export const validateCoupon = async (req, res) => {
   try {
     const { code } = req.body;
     const coupon = await Coupon.findOne({

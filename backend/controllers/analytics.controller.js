@@ -1,6 +1,8 @@
 import User from "../models/user.model.js"
 import Product from "../models/product.model.js"
 import Order from "../models/order.model.js"
+import { get } from "mongoose";
+import e from "express";
 
 export const  getAnalyticsData = async() =>{
     const totalUsers = await User.countDocuments();
@@ -29,6 +31,7 @@ export const  getAnalyticsData = async() =>{
 }
 
 export const getDailySalesData = async(startDate, endDate) =>{
+   try {
     return Order.aggregate([
         {
             $match:{
@@ -47,18 +50,30 @@ export const getDailySalesData = async(startDate, endDate) =>{
         },
         { $sort: { _id: 1 } },
     ]);
-    // [
-    //     {
-    //         _id : "2025-08-02",
-    //         sales: 5,
-    //         Revenue: 500
-    //     },
-    // ]
+   
 
+    const dateArray =  getDateInRange(startDate, endDate);
 
-    const dateArray = 
-}
+    return dateArray.map(date =>{
+        const foundData = getDailySalesData.find(item => item._id === date);
+        return{
+            date,
+            sales:  foundData?.sales || 0,
+            revenue : foundData?.revenue || 0 
+        };
+    });
+   } catch (error) {
+    console.log("Error in analytics controller", error.message);
+    res.status(500).json({ message: "server error", error: error.message });
+   }
+};
 
 function getDateInRange(startDate, endDate){
-    
+    const dates = [];
+    let currentDate = new Date(startDate);
+    while(currentDate <= endDate){
+        dates.push(currentDate);
+        currentDate = new Date(currentDate.setDate(currentDate.getDate() + 1));
+    }
+    return dates;
 }
