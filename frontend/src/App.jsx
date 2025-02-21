@@ -4,8 +4,12 @@ import HomePage from "./components/HomePage";
 import LoginPage from "./components/LoginPage";
 import SignupPage from "./components/SignupPage";
 import Navbar from "./components/Navbar";
+import { Toaster } from "react-hot-toast";
+import { useUserStore } from "./stores/useUserStore";
 
 const App = () => {
+
+  const {user} = useUserStore();
   return (
     <div className="relative min-h-screen">
       {/* Background Pattern */}
@@ -21,9 +25,10 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/signup" element={<SignupPage />} />
-          <Route path="/login" element={<LoginPage />} />
+          <Route path="/login" element={user? <HomePage/> : <LoginPage />} />
         </Routes>
       </div>
+      <Toaster/>
     </div>
   );
 };
