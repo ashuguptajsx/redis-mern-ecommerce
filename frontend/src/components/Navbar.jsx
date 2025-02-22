@@ -1,10 +1,14 @@
 import { ShoppingCart, UserPlus, LogIn, LogOut, Lock, Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useUserStore } from "../stores/useUserStore";
 
 const Navbar = () => {
-  const user = false;
-  const isAdmin = false;
+  const {user, logout} = useUserStore();
+  const isAdmin = user.role === "admin"
+
+
+
   const [cartItems, setCartItems] = useState(3);
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -88,7 +92,7 @@ const Navbar = () => {
             {user ? (
               <button
                 className='bg-gradient-to-r from-slate-700 to-slate-900 hover:from-slate-500 hover:to-slate-600  text-white py-2 px-4 rounded-md flex items-center  shadow-md'
-                // onClick={logout}
+                onClick={logout}
               >
                 <LogOut size={18} />
                 <span className='ml-2'>Log Out</span>

@@ -1,15 +1,25 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { use } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "./components/HomePage";
 import LoginPage from "./components/LoginPage";
 import SignupPage from "./components/SignupPage";
 import Navbar from "./components/Navbar";
 import { Toaster } from "react-hot-toast";
 import { useUserStore } from "./stores/useUserStore";
+import { useEffect } from "react";
+
+
 
 const App = () => {
 
-  const {user} = useUserStore();
+  const {user, checkAuth} = useUserStore();
+
+
+  useEffect(()=>{
+    checkAuth();
+  }
+  ,[checkAuth]);
+  
   return (
     <div className="relative min-h-screen">
       {/* Background Pattern */}
@@ -24,8 +34,8 @@ const App = () => {
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/login" element={user? <HomePage/> : <LoginPage />} />
+          <Route path="/signup" element={!user?<SignupPage />: <Navigate to = "/"/> } />
+          <Route path="/login" element={!user?  <LoginPage/> : <Navigate to = "/"/>} />
         </Routes>
       </div>
       <Toaster/>
