@@ -5,7 +5,7 @@ import { useUserStore } from "../stores/useUserStore";
 
 const Navbar = () => {
   const {user, logout} = useUserStore();
-  const isAdmin = user.role === "admin"
+  const isAdmin = user?.role === "admin";
 
 
 
@@ -23,7 +23,7 @@ const Navbar = () => {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll);  
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
