@@ -82,7 +82,7 @@ const Navbar = () => {
             {isAdmin && (
               <Link
                 className='bg-gradient-to-r from-slate-700 to-slate-900 text-white px-4 hover:from-slate-500 hover:to-slate-600 py-2 rounded-md transition duration-300 border border-slate-600 shadow-md font-mono tracking-wide '
-                to={"/secret-dashboard"}
+                to={"/dashboard"}
               >
                 <Lock className='inline-block mr-2' size={18} />
                 <span>Dashboard</span>
@@ -148,7 +148,7 @@ const Navbar = () => {
             {isAdmin && (
               <Link
                 className='bg-gradient-to-r from-slate-700 to-slate-800 hover:from-slate-600 hover:to-slate-900 text-white px-4 py-2 rounded-md transition duration-300 border border-slate-600 shadow-md text-center font-mono tracking-wide'
-                to={"/secret-dashboard"}
+                to={"/dashboard"}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <Lock className='inline-block mr-2' size={18} />

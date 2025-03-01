@@ -37,7 +37,7 @@ const SignUpForm = () => {
     >
       <motion.form
         onSubmit={handleSubmit}
-        className="flex flex-col gap-4 p-6 bg-slate-900 rounded-xl shadow-lg w-80 border border-slate-700"
+        className="flex flex-col gap-4 p-6 border border-gray-600 rounded-xl shadow-lg w-80 "
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -90,7 +90,7 @@ const SignUpForm = () => {
         </p>
       </motion.form>
     </motion.div>
-  );
+  );;
 };
 
 export default SignUpForm;
