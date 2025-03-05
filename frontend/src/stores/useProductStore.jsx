@@ -40,7 +40,19 @@ export const useProductStore = create((set) =>({
 
 
     toggleFeaturedProduct : async(id) =>{},
-    deleteProduct : async(id) =>{},
+    deleteProduct : async(productId) =>{
+      set({loading:true});
+      try {
+        const response = await axios.patch(`/products/${productId}`);
+        set((prevProducts)=>({
+          products: prevProducts.products.map((product)=> product._id === productId ? {...product, isFeatured: !product.isFeatured} : product),
+          loading : false
+        }))
+        
+      } catch (error) {
+        
+      }
+    },
 
 
 }))
