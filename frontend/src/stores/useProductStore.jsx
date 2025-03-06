@@ -39,8 +39,7 @@ export const useProductStore = create((set) =>({
       },
 
 
-    toggleFeaturedProduct : async(id) =>{},
-    deleteProduct : async(productId) =>{
+    toggleFeaturedProduct : async(productId) =>{
       set({loading:true});
       try {
         const response = await axios.patch(`/products/${productId}`);
@@ -50,8 +49,11 @@ export const useProductStore = create((set) =>({
         }))
         
       } catch (error) {
-        
+        console.log(error);
       }
+    },
+    deleteProduct : async(productId) =>{
+      
     },
 
 

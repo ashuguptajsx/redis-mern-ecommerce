@@ -1,5 +1,5 @@
 import Product from "../models/product.model.js";
-import redis from "redis";
+import {redis} from "../lib/redis.js";
 import cloudinary from "../lib/cloudinary.js";
 
 export const getAllProducts = async (req, res) => {
@@ -153,8 +153,10 @@ async function updateFeaturedProductsCache(){
   try {
 
     //lean() method is used to get a plain javascript object instead of a mongoose document
-    const featuredProducts  = await Product.find({isFeatured:true}).lean(); 
+    const featuredProducts  = await Product.find({isFeatured:true}).lean();
+    console.log("Featured products from DB:", featuredProducts); 
     await redis.set("featured_products", JSON.stringify(featuredProducts));
+    
   } catch (error) {
     console.log("error in updating featured products cache")
     
