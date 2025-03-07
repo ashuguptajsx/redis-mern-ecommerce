@@ -67,6 +67,7 @@ export const createProduct = async (req, res) => {
     console.log("Error in createProduct controller", error.message);
     res.status(500).json({ message: "server error", error: error.message });
   }
+
 };
 
 export const deleteProduct = async (req, res) => {
@@ -152,13 +153,13 @@ export const togglefeaturedProduct = async (req, res) => {
 async function updateFeaturedProductsCache(){
   try {
 
-    //lean() method is used to get a plain javascript object instead of a mongoose document
+   
     const featuredProducts  = await Product.find({isFeatured:true}).lean();
     console.log("Featured products from DB:", featuredProducts); 
     await redis.set("featured_products", JSON.stringify(featuredProducts));
     
   } catch (error) {
-    console.log("error in updating featured products cache")
+    console.log("error in updating featured products controller")
     
   }
 }
