@@ -6,7 +6,8 @@ import SignupPage from "./components/SignupPage";
 import Navbar from "./components/Navbar";
 import { Toaster } from "react-hot-toast";
 import { useUserStore } from "./stores/useUserStore";
-import AdminPage from "./components/AdminPage";
+import AdminPage from "./components/AdminPage"
+import CategoryPage from "./components/CategoryPage";
 import { useEffect } from "react";
 
 
@@ -38,6 +39,8 @@ const App = () => {
           <Route path="/signup" element={!user?<SignupPage />: <Navigate to = "/"/> } />
           <Route path="/login" element={!user?  <LoginPage/> : <Navigate to = "/"/>} />
           <Route path="/dashboard" element={user?.role=="admin" ?  <AdminPage/> : <Navigate to = "/"/>} />
+          <Route path="/category/:category" element={<CategoryPage/>} />
+
 
         </Routes>
       </div>
