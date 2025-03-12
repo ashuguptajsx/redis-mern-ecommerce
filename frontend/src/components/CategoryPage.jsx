@@ -7,6 +7,8 @@ import { useProductStore } from '../stores/useProductStore'
  const CategoryPage = () => {
     const{fetchProductsByCategory, products} = useProductStore();
 
+    const {category} = useParams(); 
+
     useEffect(()=>{
         fetchProductsByCategory("shoes");
     },[fetchProductsByCategory])
