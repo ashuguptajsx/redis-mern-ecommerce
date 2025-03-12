@@ -1,9 +1,11 @@
  import React, { useEffect } from 'react'
 import { useProductStore } from '../stores/useProductStore'
 
+
+
  
  const CategoryPage = () => {
-    const{fetchProductsByCategory} = useProductStore();
+    const{fetchProductsByCategory, products} = useProductStore();
 
     useEffect(()=>{
         fetchProductsByCategory("shoes");
@@ -16,3 +18,5 @@ import { useProductStore } from '../stores/useProductStore'
  }
  
  export default CategoryPage
+
+ 

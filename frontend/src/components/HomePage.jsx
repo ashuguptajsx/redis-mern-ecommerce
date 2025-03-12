@@ -3,11 +3,11 @@ import React from 'react';
 const HomePage = () => {
   // Product data with image paths and hrefs
   const products = [
-    { name: 'shoes', image: '/img1.jpg', href: '/category/hello' },
-    { name: 'hoodies', image: '/img2.jpg', href: '/category/jeans' },
-    { name: 'bluedress', image: '/img3.jpg', href: '/category/dress' },
-    { name: 'jacket', image: '/img4.jpg', href: '/category/skirt' },
-    { name: 'dress', image: '/img5.jpg', href: '/category/shoes' },
+    { name: 'shoes', image: '/img1.jpg', href: '/shoes' },
+    { name: 'hoodies', image: '/img2.jpg', href: '/jeans' },
+    { name: 'bluedress', image: '/img3.jpg', href: '/dress' },
+    { name: 'jacket', image: '/img4.jpg', href: '/skirt' },
+    { name: 'dress', image: '/img5.jpg', href: '/shoes' },
   ];
 
   return (

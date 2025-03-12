@@ -12,7 +12,7 @@ export const getAllProducts = async (req, res) => {
       message: "Server error",
       error: error.message,
     });
-  }
+  }s
 };
 
 export const getFeaturedProducts = async (req, res) => {
