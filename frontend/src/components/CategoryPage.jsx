@@ -2,6 +2,7 @@
  import { useParams } from 'react-router-dom'
 import { useProductStore } from '../stores/useProductStore'
 import { motion } from 'framer-motion'
+import ProductCard from './ProductCard'
 
 
 
@@ -38,10 +39,10 @@ import { motion } from 'framer-motion'
 							No products found
 						</h2>
 					)}
-{/* 
+
 					{products?.map((product) => (
 						<ProductCard key={product._id} product={product} />
-					))} */}
+					))}
 				</motion.div>
 
       </div>
