@@ -13,9 +13,19 @@ export const useCartStore = create((set, get) =>({
         const cart = get().cart;
         const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
         const total = get().coupon 
-            ? subtotal - (subtotal * (get().coupon.discount / 100)) 
+            ? subtotal - (subtotal * (get().coupon.discountPercentage / 100)) 
             : subtotal;
         set({ subtotal, total });
+    },
+
+    clearCart: async () => {
+        try {
+            await axios.delete("/cart");
+            set({ cart: [], coupon: null });
+            get().calculateTotals();
+        } catch (error) {
+            toast.error(error.response?.data?.message || "Error clearing cart");
+        }
     },
 
     getCartItems: async () => {
@@ -65,9 +75,8 @@ export const useCartStore = create((set, get) =>({
             }));
             
             get().calculateTotals();
-            toast.success("Product removed from cart");
         } catch (error) {
-            toast.error(error.response?.data?.message || "An error occurred");
+            throw error;
         }
     },
 
@@ -93,5 +102,21 @@ export const useCartStore = create((set, get) =>({
         } catch (error) {
             toast.error(error.response?.data?.message || "An error occurred");
         }
+    },
+
+    applyCoupon: async (code) => {
+        try {
+            const response = await axios.post('/coupons/validate', { code });
+            set({ coupon: response.data });
+            get().calculateTotals();
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    removeCoupon: () => {
+        set({ coupon: null });
+        get().calculateTotals();
     }
 })) 

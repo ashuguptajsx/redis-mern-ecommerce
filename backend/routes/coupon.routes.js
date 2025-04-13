@@ -1,14 +1,19 @@
 import express from "express";
-import { getCoupons } from "../controllers/coupon.controllers.js";
-import { protectRoute } from "../middleware/auth.middleware.js";
-import { validateCoupon } from "../controllers/coupon.controllers.js";
-
+import { protectRoute, adminRoute } from "../middleware/auth.middleware.js";
+import { validateCoupon, getUserCoupons, createCoupon } from "../controllers/coupon.controller.js";
 
 const router = express.Router();
 
+// All routes require authentication
+router.use(protectRoute);
 
-router.get("/", protectRoute, getCoupons);
-router.get("/validate", protectRoute, validateCoupon);
+// Validate a coupon code
+router.post('/validate', validateCoupon);
 
+// Get user's coupons
+router.get('/user', getUserCoupons);
+
+// Create a new coupon (admin only)
+router.post('/', adminRoute, createCoupon);
 
 export default router; 

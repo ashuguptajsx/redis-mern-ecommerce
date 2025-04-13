@@ -67,10 +67,17 @@ export const updateQuantity = async (req, res) => {
 export const getCartProducts = async (req, res) => {
     try {
         const user = await req.user.populate('cartItems.product');
-        const cartItems = user.cartItems.map(item => ({
-            ...item.product.toJSON(),
-            quantity: item.quantity
-        }));
+        const cartItems = user.cartItems.map(item => {
+            const productData = item.product.toJSON();
+            return {
+                _id: productData._id,
+                name: productData.name,
+                price: productData.price,
+                image: productData.image,
+                countInStock: productData.countInStock,
+                quantity: item.quantity
+            };
+        });
         res.json(cartItems);
     } catch (error) {
         console.log("error in getCartItems controller", error.message);

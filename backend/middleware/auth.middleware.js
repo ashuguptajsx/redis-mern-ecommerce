@@ -2,43 +2,49 @@ import jwt from "jsonwebtoken";
 import User from "../models/user.model.js";
 
 export const protectRoute = async (req, res, next) => {
-  try {
-    const accessToken = req.cookies.accessToken;
-
-    if (!accessToken) {
-      return res.status(401).json({
-        message: "User not authenticated-No access token",
-      });
-    }
-
     try {
-      const decoded = jwt.verify(accessToken, process.env.JWT_SECRET);
-      const user = await User.findById(decoded.userId).select("-password");
+        const accessToken = req.cookies.accessToken;
 
-      if (!user) {
-        return res.status(404).json({
-          message: "User not found",
-        });
-      }
+        if (!accessToken) {
+            return res.status(401).json({
+                message: "Not authorized - No token provided"
+            });
+        }
 
-      req.user = user;
-      next();
+        const decoded = jwt.verify(accessToken, process.env.JWT_SECRET);
+        const user = await User.findById(decoded.userId).select("-password");
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+
+        req.user = user;
+        next();
     } catch (error) {
-      if (error.name === "TokenExpiredError") {
-        return res.status(401).json({ message: "Token expired" });
-      }
-      throw error;
+        console.error("Error in auth middleware:", error.message);
+        if (error.name === "TokenExpiredError") {
+            return res.status(401).json({ message: "Token expired" });
+        }
+        if (error.name === "JsonWebTokenError") {
+            return res.status(401).json({ message: "Invalid token" });
+        }
+        res.status(401).json({ message: "Not authorized" });
     }
-  } catch (error) {
-    console.log("Error in protect route", error.message);
-    return res.status(401).json({ message: "unathorized access" });
-  }
 };
 
 export const adminRoute = async (req, res, next) => {
-    if(req.user && req.user.role === "admin"){
-        next();
-    }else{
-        return res.status(403).json({message:"access denied Admin only"})
+    if (!req.user) {
+        return res.status(401).json({ message: "Not authorized - No user found" });
     }
-}
+    
+    if (req.user.role !== "admin") {
+        return res.status(403).json({ message: "Not authorized - Admin access required" });
+    }
+    
+    next();
+};
+
+// Alias for backward compatibility
+export const verifyToken = protectRoute;

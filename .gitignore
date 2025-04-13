@@ -7,3 +7,4 @@ backend/node_modules/
 # Ignore .env files in root and backend folder
 .env
 backend/.env
+frontend/.env

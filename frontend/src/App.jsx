@@ -9,6 +9,9 @@ import { useUserStore } from "./stores/useUserStore";
 import AdminPage from "./components/AdminPage"
 import CategoryPage from "./components/CategoryPage";
 import { useEffect } from "react";
+import CartPage from "./components/CartPage";
+import PurchaseSuccess from "./pages/PurchaseSuccess";
+import { useCartStore } from "./stores/useCartStore";
 
 
 
@@ -40,7 +43,8 @@ const App = () => {
           <Route path="/login" element={!user?  <LoginPage/> : <Navigate to = "/"/>} />
           <Route path="/dashboard" element={user?.role=="admin" ?  <AdminPage/> : <Navigate to = "/"/>} />
           <Route path="/category/:category" element={<CategoryPage/>} />
-
+          <Route path = "/cart" element={user ? <CartPage/> : <Navigate to= "/login"/>}/>
+          <Route path="/purchase-success" element={user ? <PurchaseSuccess /> : <Navigate to="/login" />} />
 
         </Routes>
       </div>
