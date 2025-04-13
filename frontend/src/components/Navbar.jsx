@@ -2,16 +2,24 @@ import { ShoppingCart, UserPlus, LogIn, LogOut, Lock, Menu, X } from "lucide-rea
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useUserStore } from "../stores/useUserStore";
+import { useCartStore } from "../stores/useCartStore";
 
 const Navbar = () => {
-  const {user, logout} = useUserStore();
+  const { user, logout } = useUserStore();
   const isAdmin = user?.role === "admin";
+  const { cart, getCartItems } = useCartStore();
 
+  const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
 
-
-  const [cartItems, setCartItems] = useState(3);
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Get cart items when component mounts
+  useEffect(() => {
+    if (user) {
+      getCartItems();
+    }
+  }, [user, getCartItems]);
 
   // Handle scroll effect
   useEffect(() => {
@@ -69,12 +77,11 @@ const Navbar = () => {
                 className='relative group text-gray-300 hover:text-slate-600 transition duration-300 '
               >
                 <ShoppingCart className='inline-block mr-2 group-hover:text-slate-600' size={20} />
-                
-                {cartItems > 0 && (
+                {cartItemCount > 0 && (
                   <span
                     className='absolute -top-2 -right-2 bg-slate-900 text-white rounded-full h-5 w-5 flex items-center justify-center text-xs font-bold group-hover:bg-slate-600 transition duration-300'
                   >
-                    {cartItems}
+                    {cartItemCount}
                   </span>
                 )}
               </Link>
@@ -136,11 +143,11 @@ const Navbar = () => {
               >
                 <ShoppingCart className='inline-block mr-2 group-hover:text-slate-500' size={20} />
                 <span>Cart</span>
-                {cartItems > 0 && (
+                {cartItemCount > 0 && (
                   <span
                     className='absolute top-0 ml-16 bg-slate-500 text-white rounded-full h-5 w-5 flex items-center justify-center text-xs font-bold group-hover:bg-slate-500 transition duration-300'
                   >
-                    {cartItems}
+                    {cartItemCount}
                   </span>
                 )}
               </Link>
@@ -159,7 +166,10 @@ const Navbar = () => {
             {user ? (
               <button
                 className='bg-gradient-to-r from-slate-700 to-slate-800 hover:from-slate-600 hover:to-slate-900 text-white py-2 px-4 rounded-md flex items-center justify-center transition duration-300 shadow-md'
-                // onClick={logout}
+                onClick={() => {
+                  logout();
+                  setMobileMenuOpen(false);
+                }}
               >
                 <LogOut size={18} />
                 <span className='ml-2'>Log Out</span>
