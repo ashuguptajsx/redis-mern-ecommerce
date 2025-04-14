@@ -8,3 +8,7 @@ backend/node_modules/
 .env
 backend/.env
 frontend/.env
+
+
+# Ignore Dockerfile in the backend directory
+backend/Dockerfile
